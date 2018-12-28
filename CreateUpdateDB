@@ -1,0 +1,129 @@
+******************************************
+/* Creating Database for the restaurant */
+******************************************
+
+create database restaurantdb;
+
+create table chef_list(chef_id varchar(20), ch_name varchar(50), cuisine varchar(20), salary float(10,2));
+create table customer_list(customer_id varchar(20), c_name varchar(50), phone_no int(15), email_id varhcar(50));
+create table employee_list(employee_id varchar(20), e_name varchar(50), phone_no int(15), salary float(10,2), manager varchar(20));
+create table manager_list(employee_id varchar(20), primary_skill varchar(20));
+create table waiter_list(employee_id varchar(20), job_status varchar(20));
+
+create table place_order(customer_id varchar(20), order_id varchar(20), employee_id varchar(20), bill_amount float(10,2));
+create table order_details(order_id varchar(20), item_name varchar(20), quantity integer(5), chef_id varchar(20));
+create table prepared_by( chef_id varchar(20), item_name varchar(20));
+create table menu_items(item_name varchar(20), type varchar(20), main_ingredient1 varchar(20), main_ingredient2 varchar(20), main_ingredient3 varchar(20), img blob); 
+
+****************
+/* New waiter */
+insert into employee_list('w332', 'ahmad', '4568542030', '20.00', 'w005');
+insert into waiter_list('w332', 'Full time');
+****************
+
+*******************
+/* Update waiter */
+update employee_list set phone_no='2093655895', salary='25.00' where employee_id='w332';
+update waiter_list set job_status = 'Full time' where waiter_id='w332';
+*******************
+
+*******************
+/* Delete Waiter */
+delete from employee_list where employee_id='w252';
+delete from waiter_list where waiter_id='w252';
+*******************
+
+**************
+/* New chef */
+insert into chef_list('ch989', 'Andre Gustavo', 'Italian', '98.00');
+**************
+
+*****************
+/* Update Chef */
+update chef_list set salary='52.00' where chef_id='ch542';
+*****************
+
+*****************
+/* Delete Chef */
+delete from chef_list where chef_id='ch521';
+*****************
+
+*************************
+/* Items chef prepares */
+insert into prepared_by('ch445', 'wings');
+update prepared_by set item_name='devilled eggs' where chef_id='ch445' & item_name='wings';
+*************************
+
+*****************
+/* New manager */
+insert into employee_list('e524', 'dwayne john', '5023014258', '52.50', 'e524');
+insert into manager_list('e524', 'rest_1');
+*****************
+
+********************
+/* Update manager */
+update employee_list set phone_no='4093655895', salary='20.00' where employee_id='e626';
+update manager_list set primary_skill='rest_3' where employee_id='e626';
+********************
+
+*********************
+/* Delete employee */
+delete from employee_list where employee_id='e633';
+delete from manager_list where employee_id='e633';
+*********************
+
+******************
+/* New customer */
+insert into customer_list('c001', 'joe clark', '2015478893', 'joe@abc.com');
+******************
+
+*********************
+/* Update Customer */
+Update customer_list phone_no='2335650200', email_id='mojo@outlook.com' where customer_id='c362';
+*********************
+
+*********************
+/* Delete Customer */
+delete from customer_list where customer_id='c252';
+*********************
+
+****************************
+/* New order for customer */
+insert into place_order('o001', 'c235', 'e233', '220');
+insert into order_details('o001', 'wings', 2, 'ch209');
+****************************
+
+****************
+/* Edit order */
+update  order_details set no_items='3', where order_id='o001';
+****************
+
+*****************************
+/* waiter serving customer */
+select employee_name from employee_list LEFT JOIN place_order where customer_id='c226';
+*****************************
+
+*******************************************
+/* customers who ordered a specific item */
+select customer_name from customer_list JOIN ( select order_id from order_details JOIN place_order where item_name='wings');
+*******************************************
+
+***********************
+/* Items of an order */
+select item_name, quantinty from order_details where oder_id='o775';
+***********************
+
+*********************************
+/* Order details of a customer */
+select * from place_order JOIN order_details where place_order.customer_id='c652';
+*********************************
+
+*********************************
+/* Manager a waiter reports to */
+select manager from employee_list where employee_id='w220';
+*********************************
+
+************************************
+/* Items a specific chef prepares */
+select item_name from prepared_by where chef_id='ch935';
+************************************
