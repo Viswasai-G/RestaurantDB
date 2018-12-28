@@ -1,3 +1,7 @@
+// Run using:
+//            java -classpath .:/usr/share/java/mysql-connector-java-5.1.28.jar Example
+
+
 import java.io.*;
 import java.sql.*;
 import java.util.Scanner;
